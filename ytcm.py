@@ -8,6 +8,7 @@ try:
     import random
     import shutil
     import platform
+    YSIZE = os.get_terminal_size()[0]
 except ImportError:
     print("FATAL ERROR: Some modules could not be found.")
     sys.exit(1)
@@ -67,7 +68,7 @@ def get_length(filename):
 if _dlv:# Only downloading when conditional. Downloading takes over an hour.
     c = pytube.Channel(args[0])
     inc = 0
-    bar = ProgressBar(len(c.video_urls)*2,prefix="Downloading",suffix="Preparing",bar_length=200,spinner_type="s")
+    bar = ProgressBar(len(c.video_urls)*2,prefix="Downloading",suffix="Preparing",bar_length=YSIZE,spinner_type="s")
     for video in c.video_urls:
         bar.iter()
         try:
@@ -90,7 +91,7 @@ if _dlv:# Only downloading when conditional. Downloading takes over an hour.
         sys.exit() #No point in throwing filenotfound error
 if _exv:
     g = glob.glob("*.mp4")
-    bar = ProgressBar(int(len(g)*2),prefix="Extracting",suffix="Preparing",bar_length=200,spinner_type="s")
+    bar = ProgressBar(int(len(g)*2),prefix="Extracting",suffix="Preparing",bar_length=YSIZE,spinner_type="s")
     for v in g:
         bar.iter()
         _len = int(get_length(v) // 1)# Rounding down
